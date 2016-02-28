@@ -38,5 +38,24 @@ namespace CardDemo
             Console.WriteLine("=========================");
             Console.WriteLine("Drop cards within the white box to indicate their combined values.");
         }
+
+        /// <summary>
+        /// Uses the command line arguments to determine the resolution of the window/table
+        /// </summary>
+        /// <param name="args"></param>
+        public static void ParseResolutionArgs(string[] args)
+        {
+            uint x;
+            uint y;
+
+            if(args.Length == 2)
+            {
+                if(uint.TryParse(args[0], out x) && uint.TryParse(args[1], out y))
+                {
+                    WindowWidth = x;
+                    WindowHeight = y;
+                }
+            }
+        }
     }
 }

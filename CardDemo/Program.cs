@@ -20,6 +20,8 @@ namespace CardDemo
 
         static void Main(string[] args)
         {
+            Utility.ParseResolutionArgs(args);
+
             Utility.PrintControls();
 
             // Open a 1280x720 window @ 60fps
