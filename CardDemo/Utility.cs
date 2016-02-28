@@ -14,6 +14,9 @@ namespace CardDemo
         public const float CARD_WIDTH = 100;
         public const float CARD_HEIGHT = 130;
 
+        public static uint WindowWidth = 1280;
+        public static uint WindowHeight = 720;
+
         public static Font GlobalFont = new Font("C:\\Windows\\Fonts\\arial.ttf");
         public static Color BackgroundColor = new Color(0, 151, 51);
 
