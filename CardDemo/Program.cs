@@ -11,6 +11,8 @@ namespace CardDemo
 {
     class Program
     {
+        private static RenderWindow _window;
+
         private static Table _table;
 
         private static bool _isDragging;
@@ -21,30 +23,30 @@ namespace CardDemo
             Utility.PrintControls();
 
             // Open a 1280x720 window @ 60fps
-            RenderWindow window = new RenderWindow(new VideoMode(1280, 720, 32), "Cards!");
-            window.SetFramerateLimit(60);
+            _window = new RenderWindow(new VideoMode(Utility.WindowWidth, Utility.WindowHeight, 32), "Cards!", Styles.Close);
+            _window.SetFramerateLimit(60);
 
-            window.Closed += Exit;
-            window.MouseButtonPressed += MouseButtonPressed;
-            window.MouseButtonReleased += MouseButtonReleased;
-            window.KeyReleased += KeyReleased;
+            _window.Closed += Exit;
+            _window.MouseButtonPressed += MouseButtonPressed;
+            _window.MouseButtonReleased += MouseButtonReleased;
+            _window.KeyReleased += KeyReleased;
 
-            _table = new Table(window.Size.X, window.Size.Y);
+            _table = new Table(_window.Size.X, _window.Size.Y);
 
             // Main loop
-            while (window.IsOpen)
+            while (_window.IsOpen)
             {
-                window.DispatchEvents();
-                window.Clear(Utility.BackgroundColor);
+                _window.DispatchEvents();
+                _window.Clear(Utility.BackgroundColor);
 
                 if (_isDragging)
                 {
-                    _cardToDrag.Move(Mouse.GetPosition(window).X, Mouse.GetPosition(window).Y);
+                    _cardToDrag.Move(Mouse.GetPosition(_window).X, Mouse.GetPosition(_window).Y);
                 }
 
-                window.Draw(_table);
+                _window.Draw(_table);
 
-                window.Display();
+                _window.Display();
             }
         }
 
