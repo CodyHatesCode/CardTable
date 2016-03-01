@@ -11,15 +11,22 @@ namespace CardDemo
     public class Table : Drawable
     {
         private Deck _deck;
+
         private List<Card> _cards;
-        private ValueChecker _vC;
+        private List<ValueChecker> _valueCheckers;
 
         private Vector2f _windowSize;
 
         public Table(float windowX, float windowY)
         {
             _deck = new Deck(50, 50);
-            _vC = new ValueChecker(windowX - 200, windowY - 250, this);
+
+            _valueCheckers = new List<ValueChecker>
+            {
+                new ValueChecker(windowX - 200, windowY - 250, this),
+                new ValueChecker(windowX - 500, windowY - 250, this)
+            };
+
             _cards = new List<Card>();
 
             _windowSize = new Vector2f(windowX, windowY);
@@ -182,7 +189,10 @@ namespace CardDemo
         {
             target.Draw(_deck);
 
-            target.Draw(_vC);
+            foreach(ValueChecker vC in _valueCheckers)
+            {
+                target.Draw(vC);
+            }
 
             foreach(Card c in _cards)
             {
