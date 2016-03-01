@@ -57,5 +57,29 @@ namespace CardDemo
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the true value of a card (J, Q, K = 10)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static int GetTrueValue(int value)
+        {
+            int trueValue;
+
+            switch(value)
+            {
+                default:
+                    trueValue = value;
+                    break;
+                case 11:
+                case 12:
+                case 13:
+                    trueValue = 10;
+                    break;
+            }
+
+            return trueValue;
+        }
     }
 }
