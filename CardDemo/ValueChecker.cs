@@ -54,7 +54,7 @@ namespace CardDemo
             // Add their values (+1 because of array)
             foreach (Card c in cardsWithin)
             {
-                cardValueQty += ((int)c.Value + 1);
+                cardValueQty += (Utility.GetTrueValue((int)c.Value + 1));
             }
 
             _valueNumber.DisplayedString = cardValueQty.ToString();
