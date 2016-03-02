@@ -49,12 +49,12 @@ namespace CardDemo
             // Ask the table for all the cards within this boundary
             List<Card> cardsWithin = _parent.CardsWithin(GetBounds());
 
-            int cardValueQty = 0;
+            uint cardValueQty = 0;
             
             // Add their values (+1 because of array)
             foreach (Card c in cardsWithin)
             {
-                cardValueQty += (Utility.GetTrueValue((int)c.Value + 1));
+                cardValueQty += (Utility.GetTrueValue(c.Value + 1));
             }
 
             _valueNumber.DisplayedString = cardValueQty.ToString();

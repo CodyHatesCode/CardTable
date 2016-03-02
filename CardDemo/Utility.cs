@@ -63,9 +63,9 @@ namespace CardDemo
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static int GetTrueValue(int value)
+        public static uint GetTrueValue(uint value)
         {
-            int trueValue;
+            uint trueValue;
 
             switch(value)
             {
