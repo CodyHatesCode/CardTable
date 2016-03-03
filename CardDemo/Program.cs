@@ -59,21 +59,21 @@ namespace CardDemo
 
         private static void MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
-            // Check for a card at this position
+            // Check for any objects at this position
             Object objectAtPosition = _table.CheckPos(e.X, e.Y);
-            if (objectAtPosition != null && objectAtPosition.GetType() == typeof(Card))
+            if(objectAtPosition != null)
             {
-                // Enable dragging, pick up the card, move it to the "top" of the table
-                Card c = (Card)objectAtPosition;
-                _isDragging = true;
-                _table.MoveCardToTop(c);
-                _cardToDrag = c;
-            }
-            // If not, look for the deck
-            else
-            {
-                // Check mouse position for the deck; draw if true
-                if (objectAtPosition != null && objectAtPosition.GetType() == typeof(Deck))
+                // Cards (1st priority)
+                if(objectAtPosition.GetType() == typeof(Card))
+                {
+                    // Enable dragging, pick up the card, move it to the "top" of the table
+                    Card c = (Card)objectAtPosition;
+                    _isDragging = true;
+                    _table.MoveCardToTop(c);
+                    _cardToDrag = c;
+                }
+                // Decks
+                else if (objectAtPosition != null && objectAtPosition.GetType() == typeof(Deck))
                 {
                     // Immediately drag out the first card if it exists
                     Card testCard = _table.DrawFromDeck();
