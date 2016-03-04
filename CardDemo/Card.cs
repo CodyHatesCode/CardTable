@@ -19,6 +19,7 @@ namespace CardDemo
         private RectangleShape _shape;
         private Text _faceValue;
         private Text _suitSymbol;
+        private Color _cardColor;
         
         public Card(uint value, Suit suit)
         {
@@ -36,30 +37,9 @@ namespace CardDemo
             // sanity check - if "greater" than a king, make it a king
             if(Value > 12) { Value = 12; }
 
-            // create the string to be used on the card
-            string valueText = string.Empty;
-            switch(Value)
-            {
-                default:
-                    valueText = (Value + 1).ToString();
-                    break;
-                case 0:
-                    valueText = "A";
-                    break;
-                case 10:
-                    valueText = "J";
-                    break;
-                case 11:
-                    valueText = "Q";
-                    break;
-                case 12:
-                    valueText = "K";
-                    break;
-            }
-
             // Figure out the suit and color
             string symbol = string.Empty;
-            Color cardColor = Color.Black;
+            _cardColor = Color.Black;
             switch(Suit)
             {
                 case Suit.Clubs:
@@ -67,11 +47,11 @@ namespace CardDemo
                     break;
                 case Suit.Diamonds:
                     symbol = "♦";
-                    cardColor = Color.Red;
+                    _cardColor = Color.Red;
                     break;
                 case Suit.Hearts:
                     symbol = "♥";
-                    cardColor = Color.Red;
+                    _cardColor = Color.Red;
                     break;
                 case Suit.Spades:
                     symbol = "♠";
@@ -79,14 +59,13 @@ namespace CardDemo
             }
 
             // Create the face text
-            _faceValue = new Text(valueText, Utility.GlobalFont, 45);
+            _faceValue = new Text(GetValueText(), Utility.GlobalFont, 45);
             _faceValue.Style = Text.Styles.Bold;
-            _faceValue.Color = cardColor;
 
             // Create the symbol text
             _suitSymbol = new Text(symbol, Utility.GlobalFont, 40);
             _suitSymbol.Style = Text.Styles.Bold;
-            _suitSymbol.Color = cardColor;
+            _suitSymbol.Color = _cardColor;
 
             RecalculateShapes();
         }
@@ -102,12 +81,20 @@ namespace CardDemo
                                         Position.X - (Utility.CARD_WIDTH * 0.3f),
                                         Position.Y - (Utility.CARD_HEIGHT * 0.4f));
 
+            // If face up: Set the card value and text color appropriately
             if(_isFaceUp)
             {
+                _faceValue.DisplayedString = GetValueText();
+                _faceValue.Color = _cardColor;
+
                 _shape.FillColor = Color.White;
             }
+            // If face down: Set the card to the text/colors specified as the back design
             else
             {
+                _faceValue.DisplayedString = Utility.CardBackDesign;
+                _faceValue.Color = Utility.CardBackTextColor;
+
                 _shape.FillColor = Color.Cyan;
             }
 
@@ -150,6 +137,35 @@ namespace CardDemo
         }
 
         /// <summary>
+        /// Gets the 1-character string to be displayed on the card
+        /// </summary>
+        /// <returns></returns>
+        private string GetValueText()
+        {
+            string valueText;
+            switch (Value)
+            {
+                default:
+                    valueText = (Value + 1).ToString();
+                    break;
+                case 0:
+                    valueText = "A";
+                    break;
+                case 10:
+                    valueText = "J";
+                    break;
+                case 11:
+                    valueText = "Q";
+                    break;
+                case 12:
+                    valueText = "K";
+                    break;
+            }
+
+            return valueText;
+        }
+
+        /// <summary>
         /// Draws the card (called by RenderWindow.Draw())
         /// </summary>
         /// <param name="target"></param>
@@ -159,12 +175,13 @@ namespace CardDemo
             RecalculateShapes();
 
             target.Draw(_shape);
+            target.Draw(_faceValue);
 
             if(_isFaceUp)
             {
-                target.Draw(_faceValue);
                 target.Draw(_suitSymbol);
             }
         }
+
     }
 }
