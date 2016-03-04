@@ -20,6 +20,8 @@ namespace CardDemo
         public static Font GlobalFont = new Font("C:\\Windows\\Fonts\\arial.ttf");
         public static Color BackgroundColor = new Color(0, 151, 51);
 
+        public static string CardBackDesign = "//";
+        public static Color CardBackTextColor = Color.Black;
 
         public static void PrintControls()
         {
