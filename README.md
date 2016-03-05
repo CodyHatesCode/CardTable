@@ -11,6 +11,10 @@ While dragging cards:
 * Put the card back with **Left Ctrl**
 * Flip the card over with **Left Shift**
 
+Other settings:
+* Use command-line arguments to set the resolution: **CardTable.exe** *width* *height*
+* Edit **Utility.cs** to change the card sizes, background color, card back designs
+
 ![Screenshot](screenshot.png)
 
 
