@@ -60,14 +60,13 @@ namespace CardDemo
             // Find cards first (on top of deck)
             Card cToReturn = null;
 
-            // Going down the list (up from the bottom layer), will always end with the top card at this position
-            foreach(Card c in _cards)
+            // Get all this cards at this position (up from the bottom layer), always return the last one
+            var cardsAtPosition = from c in _cards where c.GetBounds().Contains(x, y) select c;
+            if (cardsAtPosition.Count() > 0)
             {
-                if(c.GetBounds().Contains(x, y))
-                {
-                    cToReturn = c;
-                }
+                cToReturn = cardsAtPosition.Last();
             }
+
 
             // If there were no cards at this position, look for the deck
             if(cToReturn == null)
@@ -167,17 +166,9 @@ namespace CardDemo
 
         public List<Card> CardsWithin(FloatRect area)
         {
-            List<Card> cardsIntersecting = new List<Card>();
+            var cardsIntersecting = from c in _cards where area.Intersects(c.GetBounds()) select c;
 
-            foreach(Card c in _cards)
-            {
-                if(area.Intersects(c.GetBounds()))
-                {
-                    cardsIntersecting.Add(c);
-                }
-            }
-
-            return cardsIntersecting;
+            return cardsIntersecting.ToList<Card>();
         }
 
         /// <summary>
